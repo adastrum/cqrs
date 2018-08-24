@@ -1,4 +1,4 @@
-﻿namespace cqrs.Domain.Common
+﻿namespace cqrs.Domain.Interfaces
 {
     public interface IAggreagateRoot
     {

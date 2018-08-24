@@ -10,6 +10,8 @@ namespace cqrs.Domain.Entities
         public DateTime Date { get; protected set; }
         public User Bidder { get; protected set; }
 
+        protected Bid() { }
+
         public Bid(Money amount, User bidder)
         {
             Amount = amount;

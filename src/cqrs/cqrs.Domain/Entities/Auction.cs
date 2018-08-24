@@ -4,6 +4,7 @@ using System.Linq;
 using cqrs.Domain.Common;
 using cqrs.Domain.Enums;
 using cqrs.Domain.Exceptions;
+using cqrs.Domain.Interfaces;
 using cqrs.Domain.ValueObjects;
 
 namespace cqrs.Domain.Entities
@@ -20,6 +21,8 @@ namespace cqrs.Domain.Entities
         public User Seller { get; protected set; }
         public IReadOnlyCollection<Bid> Bids => _bids.AsReadOnly();
         public AuctionStatus Status { get; protected set; }
+
+        protected Auction() { }
 
         public Auction(string name, string description, TimeSpan duration, Money initialAmount, User seller)
         {
