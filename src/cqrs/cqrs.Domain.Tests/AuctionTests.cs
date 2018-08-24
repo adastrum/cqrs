@@ -19,7 +19,7 @@ namespace cqrs.Domain.Tests
 
         private Auction CreateAuction()
         {
-            return new Auction("apple", "fresh and juicy", TimeSpan.FromDays(2), new Money(999.99m), _seller);;
+            return new Auction("apple", "fresh and juicy", TimeSpan.FromDays(2), new Money(999.99m), _seller);
         }
 
         [Fact]

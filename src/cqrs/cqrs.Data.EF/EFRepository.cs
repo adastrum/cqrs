@@ -10,18 +10,18 @@ namespace cqrs.Data.Sql.EF
     public class EfRepository<TEntity> : IRepository<TEntity>
         where TEntity : Entity, IAggreagateRoot
     {
-        private readonly AuctionContext _context;
+        private readonly AuctionContext _dbContext;
         private readonly DbSet<TEntity> _dbSet;
 
-        public EfRepository(AuctionContext context)
+        public EfRepository(AuctionContext dbContext)
         {
-            _context = context;
-            _dbSet = _context.Set<TEntity>();
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
         public async Task<TEntity> FindOneAsync(string id)
         {
-            return await _context.FindAsync<TEntity>(id);
+            return await _dbContext.FindAsync<TEntity>(id);
         }
 
         public async Task<IEnumerable<TEntity>> FindAllAsync()
@@ -32,21 +32,21 @@ namespace cqrs.Data.Sql.EF
         public async Task<TEntity> CreateAsync(TEntity entity)
         {
             _dbSet.Add(entity);
-            await _context.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return entity;
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
             _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

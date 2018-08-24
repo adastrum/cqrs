@@ -10,6 +10,13 @@ namespace cqrs.Data.Sql.EF
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Auction> Auctions { get; set; }
 
+        public AuctionContext() { }
+
+        public AuctionContext(DbContextOptions<AuctionContext> options)
+            : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>(user =>
@@ -53,11 +60,6 @@ namespace cqrs.Data.Sql.EF
                 auction.HasMany(x => x.Bids).WithOne();
                 auction.Property(x => x.Status).IsRequired();
             });
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=cqrs;Trusted_Connection=True;");
         }
     }
 }

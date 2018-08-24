@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cqrs.Domain.Tests", "cqrs.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{1BD84BE2-29B4-401A-B926-29E6A1AFD62F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cqrs.Data.Sql.EF", "cqrs.Data.EF\cqrs.Data.Sql.EF.csproj", "{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cqrs.Data.Sql.EF", "cqrs.Data.EF\cqrs.Data.Sql.EF.csproj", "{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cqrs.Data.Sql.EF.Tests", "cqrs.Data.Sql.EF.Tests\cqrs.Data.Sql.EF.Tests.csproj", "{AC680C58-5177-4166-8D60-05392E79D4F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC680C58-5177-4166-8D60-05392E79D4F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC680C58-5177-4166-8D60-05392E79D4F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC680C58-5177-4166-8D60-05392E79D4F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC680C58-5177-4166-8D60-05392E79D4F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{9B2BCD56-7628-42F6-AC0D-FC42853AA328} = {76627249-81B2-48E5-BBE7-C5659EA815A9}
 		{63D8984A-0412-4296-BB7C-63CB96B70175} = {F3803C28-4660-481E-86B0-CDE582C698AE}
 		{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B} = {E41DD4E2-9597-4361-B5F3-87BAEF658664}
+		{AC680C58-5177-4166-8D60-05392E79D4F2} = {F3803C28-4660-481E-86B0-CDE582C698AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {277E7FA2-DEF1-4DBD-B990-069C0BFFFBCF}
