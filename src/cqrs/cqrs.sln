@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cqrs.Data.Sql.EF", "cqrs.Data.EF\cqrs.Data.Sql.EF.csproj", "{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cqrs.Data.Sql.EF.Tests", "cqrs.Data.Sql.EF.Tests\cqrs.Data.Sql.EF.Tests.csproj", "{AC680C58-5177-4166-8D60-05392E79D4F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cqrs.Data.Sql.EF.Tests", "cqrs.Data.Sql.EF.Tests\cqrs.Data.Sql.EF.Tests.csproj", "{AC680C58-5177-4166-8D60-05392E79D4F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cqrs.Web.MVC", "cqrs.Web.MVC\cqrs.Web.MVC.csproj", "{136B2802-9718-4DDF-ACC5-D672FA099AF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{AC680C58-5177-4166-8D60-05392E79D4F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC680C58-5177-4166-8D60-05392E79D4F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC680C58-5177-4166-8D60-05392E79D4F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{136B2802-9718-4DDF-ACC5-D672FA099AF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{136B2802-9718-4DDF-ACC5-D672FA099AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{136B2802-9718-4DDF-ACC5-D672FA099AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{136B2802-9718-4DDF-ACC5-D672FA099AF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{63D8984A-0412-4296-BB7C-63CB96B70175} = {F3803C28-4660-481E-86B0-CDE582C698AE}
 		{27FE712E-FC4D-4DAB-9C6A-B55FBFE34C3B} = {E41DD4E2-9597-4361-B5F3-87BAEF658664}
 		{AC680C58-5177-4166-8D60-05392E79D4F2} = {F3803C28-4660-481E-86B0-CDE582C698AE}
+		{136B2802-9718-4DDF-ACC5-D672FA099AF3} = {7C554755-6AF5-4E8D-B71D-286236B061F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {277E7FA2-DEF1-4DBD-B990-069C0BFFFBCF}
