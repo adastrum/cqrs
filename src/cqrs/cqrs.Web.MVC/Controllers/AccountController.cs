@@ -25,13 +25,13 @@ namespace cqrs.Web.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult SignUp()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -61,14 +61,14 @@ namespace cqrs.Web.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult SignIn()
         {
-            return View(new LoginViewModel());
+            return View(new SignInViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> SignIn(SignInViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace cqrs.Web.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LogOff()
+        public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
 

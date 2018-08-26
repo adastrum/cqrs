@@ -26,40 +26,27 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>
-                            <form method="post" asp-controller="Account" asp-action="LogOff">
-                                <input type="submit" value="Sign out" />
-                            </form>
-                        </li>
-                    }
-                    else
-                    {
-                        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Sign in</a></li>
-                    }
-                </ul>
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form class="navbar-form navbar-left" method="post" asp-controller="Account" asp-action="SignOut">
+                        <button type="submit" class="btn btn-default">Sign out</button>
+                    </form>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Account" asp-action="SignUp">Sign up</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="SignIn">Sign in</a></li>
+                    </ul>
+                }
             </div>
         </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-        </footer>
+        <footer></footer>
     </div>
 
     <environment include="Development">

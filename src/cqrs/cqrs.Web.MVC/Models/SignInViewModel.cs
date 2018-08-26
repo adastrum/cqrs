@@ -2,7 +2,7 @@
 
 namespace cqrs.Web.MVC.Models
 {
-    public class LoginViewModel
+    public class SignInViewModel
     {
         [Required]
         [Display(Name = "Email")]
