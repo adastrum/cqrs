@@ -1,4 +1,10 @@
 ﻿using cqrs.Data.Sql.EF;
+using cqrs.Domain.Entities;
+using cqrs.Domain.Interfaces;
+using cqrs.Messaging.CommandHandlers;
+using cqrs.Messaging.Commands;
+using cqrs.Messaging.InMemory;
+using cqrs.Messaging.Interfaces;
 using cqrs.Web.MVC.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +36,11 @@ namespace cqrs.Web.MVC
                 .AddEntityFrameworkStores<AuthenticationContext>();
 
             services.AddMvc();
+
+            services.AddScoped<IBus, InMemoryBus>();
+
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

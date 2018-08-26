@@ -1,8 +1,9 @@
 ﻿using cqrs.Domain.Common;
+using cqrs.Domain.Interfaces;
 
 namespace cqrs.Domain.Entities
 {
-    public class User : Entity
+    public class User : Entity, IAggreagateRoot
     {
         public string Name { get; protected set; }
 

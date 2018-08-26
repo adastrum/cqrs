@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using cqrs.Messaging.Commands;
+using cqrs.Messaging.Interfaces;
 using cqrs.Web.MVC.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +11,17 @@ namespace cqrs.Web.MVC.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IBus _bus;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IBus bus
+        )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _bus = bus;
         }
 
         [HttpGet]
@@ -29,17 +37,21 @@ namespace cqrs.Web.MVC.Controllers
             {
                 var identityUser = new IdentityUser { Email = model.Email, UserName = model.Email };
 
-                var result = await _userManager.CreateAsync(identityUser, model.Password);
+                var identityResult = await _userManager.CreateAsync(identityUser, model.Password);
 
-                if (result.Succeeded)
+                if (identityResult.Succeeded)
                 {
-                    //todo: create domain user
-                    //todo: name must be unique
+                    var commandResult = await _bus.SendCommandAsync(new CreateUserCommand(model.Email));
+
+                    if (!commandResult.Succeeded)
+                    {
+                        ModelState.AddModelError(string.Empty, commandResult.Details);
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }
 
-                foreach (var error in result.Errors)
+                foreach (var error in identityResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
