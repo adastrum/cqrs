@@ -53,7 +53,7 @@ namespace cqrs.Web.MVC
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //todo: app.UseExceptionHandler
             }
 
             app.UseStaticFiles();
@@ -64,7 +64,7 @@ namespace cqrs.Web.MVC
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Auction}/{action=Index}/{id?}");
             });
         }
     }

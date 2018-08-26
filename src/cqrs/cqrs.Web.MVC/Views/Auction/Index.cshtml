@@ -1,0 +1,37 @@
+﻿@model object
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <h2>Auctions</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Seller</th>
+                <th>Lot name</th>
+                <th>Close date</th>
+                <th>Current amount</th>
+                <th>Number of bids</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John Doe</td>
+                <td>apple</td>
+                <td>2018.09.01 10:00:00</td>
+                <td>999.99</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Jane Doe</td>
+                <td>banana</td>
+                <td>2018.10.01 10:00:00</td>
+                <td>1999.99</td>
+                <td>11</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

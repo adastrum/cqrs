@@ -48,7 +48,7 @@ namespace cqrs.Web.MVC.Controllers
                         ModelState.AddModelError(string.Empty, commandResult.Details);
                     }
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Auction");
                 }
 
                 foreach (var error in identityResult.Errors)
@@ -76,7 +76,7 @@ namespace cqrs.Web.MVC.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Auction");
                 }
 
                 ModelState.AddModelError(string.Empty, "Your password is incorrect");
@@ -91,7 +91,7 @@ namespace cqrs.Web.MVC.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Auction");
         }
     }
 }
