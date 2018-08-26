@@ -23,6 +23,7 @@ namespace cqrs.Data.Sql.EF
             {
                 user.HasKey(y => y.Id);
                 user.Property(x => x.Name).IsRequired();
+                user.HasIndex(x => x.Name).IsUnique();
             });
 
             builder.Entity<Lot>(lot =>
