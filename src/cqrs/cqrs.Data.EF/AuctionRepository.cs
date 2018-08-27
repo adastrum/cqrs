@@ -9,7 +9,6 @@ namespace cqrs.Data.Sql.EF
 {
     public class AuctionRepository : IAuctionRepository
     {
-        private readonly AuctionContext _dbContext;
         private readonly DbSet<Auction> _dbSet;
         private readonly IRepository<Auction> _repository;
 
@@ -18,14 +17,17 @@ namespace cqrs.Data.Sql.EF
             IRepository<Auction> repository
         )
         {
-            _dbContext = dbContext;
-            _dbSet = _dbContext.Set<Auction>();
+            _dbSet = dbContext.Set<Auction>();
             _repository = repository;
         }
 
         public async Task<Auction> FindOneAsync(string id)
         {
-            return await _repository.FindOneAsync(id);
+            return await _dbSet.AsQueryable()
+                .Include(x => x.Lot)
+                .Include(x => x.Seller)
+                .Include(x => x.Bids).ThenInclude(x => x.Bidder)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Auction>> FindAllAsync(ISpecification<Auction> specification)

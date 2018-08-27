@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using cqrs.Domain.Entities;
 using cqrs.Domain.Enums;
@@ -8,16 +9,16 @@ namespace cqrs.Application.Specifications
 {
     public class AuctionByStatus : ISpecification<Auction>
     {
-        private readonly AuctionStatus _status;
+        private readonly AuctionStatus[] _statuses;
 
-        public AuctionByStatus(AuctionStatus status)
+        public AuctionByStatus(params AuctionStatus[] statuses)
         {
-            _status = status;
+            _statuses = statuses;
         }
 
         public Expression<Func<Auction, bool>> GetExpression()
         {
-            return x => x.Status == _status;
+            return x => _statuses.Contains(x.Status);
         }
     }
 }

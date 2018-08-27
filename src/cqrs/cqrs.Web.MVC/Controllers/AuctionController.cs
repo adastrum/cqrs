@@ -35,7 +35,7 @@ namespace cqrs.Web.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var auctions = await _auctionRepository.FindAllAsync(new AuctionByStatus(AuctionStatus.Active));
+            var auctions = await _auctionRepository.FindAllAsync(new AuctionByStatus(AuctionStatus.New, AuctionStatus.Active));
 
             var auctionListItems = auctions
                 .Select(x => _mapper.Map<AuctionListItemViewModel>(x))
@@ -57,6 +57,7 @@ namespace cqrs.Web.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAuctionViewModel model)
         {
+            //todo: validation
             var identityUser = await _userManager.GetUserAsync(User);
 
             var users = await _userRepository.FindAllAsync(new UserByName(identityUser.UserName));
@@ -68,6 +69,20 @@ namespace cqrs.Web.MVC.Controllers
             var created = await _auctionRepository.CreateAsync(auction);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Detail(string id)
+        {
+            var auction = await _auctionRepository.FindOneAsync(id);
+            if (auction == null)
+            {
+                return NotFound();
+            }
+
+            var model = _mapper.Map<AuctionViewModel>(auction);
+
+            return View(model);
         }
     }
 }

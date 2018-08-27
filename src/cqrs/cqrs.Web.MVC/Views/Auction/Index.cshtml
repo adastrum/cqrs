@@ -1,12 +1,13 @@
 ﻿@model AuctionListViewModel
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Auctions";
     Layout = "_Layout";
 }
 
 <div class="container">
     <h2>Auctions</h2>
+    <a asp-area="" asp-controller="Auction" asp-action="Create" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Create</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -22,8 +23,8 @@
             {
                 <tr>
                     <td>@auction.Seller.Name</td>
-                    <td>@auction.Lot.Name</td>
-                    <td>@auction.Closes.ToShortDateString()</td>
+                    <td><a asp-controller="Auction" asp-action="Detail" asp-route-id="@auction.Id">@auction.Lot.Name</a></td>
+                    <td>@auction.Closes?.ToShortDateString()</td>
                     <td>@auction.CurrentAmount?.Amount @auction.CurrentAmount?.CurrencyCode</td>
                     <td>@auction.Bids</td>
                 </tr>
