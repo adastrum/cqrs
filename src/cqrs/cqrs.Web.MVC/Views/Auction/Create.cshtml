@@ -1,0 +1,39 @@
+﻿@model CreateAuctionViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <h2>Create auction</h2>
+    <form method="post" asp-controller="Auction" asp-action="Create">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="Name"></label><br />
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label><br />
+            <textarea class="form-control" rows="2" asp-for="Description"></textarea>
+            <span asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Days"></label><br />
+            <input class="form-control" asp-for="Days" />
+            <span asp-validation-for="Days"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Hours"></label><br />
+            <input class="form-control" asp-for="Hours" />
+            <span asp-validation-for="Hours"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Minutes"></label><br />
+            <input class="form-control" asp-for="Minutes" />
+            <span asp-validation-for="Minutes"></span>
+        </div>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+</div>

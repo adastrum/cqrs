@@ -1,4 +1,5 @@
-﻿using cqrs.Data.Sql.EF;
+﻿using AutoMapper;
+using cqrs.Data.Sql.EF;
 using cqrs.Domain.Entities;
 using cqrs.Domain.Interfaces;
 using cqrs.Messaging.CommandHandlers;
@@ -38,9 +39,10 @@ namespace cqrs.Web.MVC
             services.AddMvc();
 
             services.AddScoped<IBus, InMemoryBus>();
-
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
+
+            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

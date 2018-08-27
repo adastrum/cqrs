@@ -10,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
@@ -19,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\cqrs.Application\cqrs.Application.csproj" />
     <ProjectReference Include="..\cqrs.Data.EF\cqrs.Data.Sql.EF.csproj" />
     <ProjectReference Include="..\cqrs.Messaging.InMemory\cqrs.Messaging.InMemory.csproj" />
     <ProjectReference Include="..\cqrs.Messaging\cqrs.Messaging.csproj" />

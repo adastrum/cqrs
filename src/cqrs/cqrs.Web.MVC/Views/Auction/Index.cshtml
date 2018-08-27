@@ -1,4 +1,4 @@
-﻿@model object
+﻿@model AuctionListViewModel
 
 @{
     ViewBag.Title = "title";
@@ -12,26 +12,22 @@
             <tr>
                 <th>Seller</th>
                 <th>Lot name</th>
-                <th>Close date</th>
+                <th>Closes</th>
                 <th>Current amount</th>
-                <th>Number of bids</th>
+                <th>Bids</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>John Doe</td>
-                <td>apple</td>
-                <td>2018.09.01 10:00:00</td>
-                <td>999.99</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>Jane Doe</td>
-                <td>banana</td>
-                <td>2018.10.01 10:00:00</td>
-                <td>1999.99</td>
-                <td>11</td>
-            </tr>
+            @foreach (var auction in Model.Auctions)
+            {
+                <tr>
+                    <td>@auction.Seller.Name</td>
+                    <td>@auction.Lot.Name</td>
+                    <td>@auction.Closes.ToShortDateString()</td>
+                    <td>@auction.CurrentAmount.Amount @auction.CurrentAmount.CurrencyCode</td>
+                    <td>@auction.Bids</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
