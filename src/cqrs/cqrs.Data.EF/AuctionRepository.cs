@@ -27,7 +27,7 @@ namespace cqrs.Data.Sql.EF
                 .Include(x => x.Lot)
                 .Include(x => x.Seller)
                 .Include(x => x.Bids).ThenInclude(x => x.Bidder)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Auction>> FindAllAsync(ISpecification<Auction> specification)

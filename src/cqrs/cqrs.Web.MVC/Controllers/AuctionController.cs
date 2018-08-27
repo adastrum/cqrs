@@ -93,16 +93,6 @@ namespace cqrs.Web.MVC.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> Close(string id)
-        {
-            var commandResult = await _bus.SendCommandAsync(new CloseAuctionCommand(id));
-
-            //todo: handle failures
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost("{id}")]
         public async Task<IActionResult> Cancel(string id)
         {
             var commandResult = await _bus.SendCommandAsync(new CancelAuctionCommand(id));

@@ -7,6 +7,12 @@
 
 <div class="container">
     <h2>Auction Details</h2>
+    @if (Model.CanManage)
+    {
+        <form method="post" asp-controller="Auction" asp-action="Cancel">
+            <button type="submit" class="btn btn-danger" value="@Model.Id"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </form>
+    }
     <div class="form-group">
         <label asp-for="@Model.Seller.Name">Seller</label><br />
         <input class="form-control" asp-for="@Model.Seller.Name" readonly />
@@ -37,21 +43,21 @@
     {
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Bidder</th>
-            </tr>
+                <tr>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Bidder</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var bid in Model.Bids)
-            {
-                <tr>
-                    <td>@bid.Amount.ToString()</td>
-                    <td>@bid.Date</td>
-                    <td>@bid.Bidder.Name</td>
-                </tr>
-            }
+                @foreach (var bid in Model.Bids)
+                {
+                    <tr>
+                        <td>@bid.Amount.ToString()</td>
+                        <td>@bid.Date</td>
+                        <td>@bid.Bidder.Name</td>
+                    </tr>
+                }
             </tbody>
         </table>
     }
