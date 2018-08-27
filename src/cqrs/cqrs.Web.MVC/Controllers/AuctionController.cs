@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using cqrs.Application.Specifications;
 using cqrs.Domain.Entities;
+using cqrs.Domain.Enums;
 using cqrs.Domain.Interfaces;
 using cqrs.Domain.ValueObjects;
 using cqrs.Web.MVC.Models;
@@ -16,13 +17,13 @@ namespace cqrs.Web.MVC.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IRepository<User> _userRepository;
-        private readonly IRepository<Auction> _auctionRepository;
+        private readonly IAuctionRepository _auctionRepository;
         private readonly IMapper _mapper;
 
         public AuctionController(
             UserManager<IdentityUser> userManager,
             IRepository<User> userRepository,
-            IRepository<Auction> auctionRepository,
+            IAuctionRepository auctionRepository,
             IMapper mapper
         )
         {
@@ -34,7 +35,7 @@ namespace cqrs.Web.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var auctions = await _auctionRepository.FindAllAsync();
+            var auctions = await _auctionRepository.FindAllAsync(new AuctionByStatus(AuctionStatus.Active));
 
             var auctionListItems = auctions
                 .Select(x => _mapper.Map<AuctionListItemViewModel>(x))
@@ -58,14 +59,15 @@ namespace cqrs.Web.MVC.Controllers
         {
             var identityUser = await _userManager.GetUserAsync(User);
 
-            var user = await _userRepository.FindOneAsync(new UserByName(identityUser.UserName));
+            var users = await _userRepository.FindAllAsync(new UserByName(identityUser.UserName));
+            var user = users.SingleOrDefault();
 
             //todo: user not found
             var auction = new Auction(model.Name, model.Description, new TimeSpan(model.Days, model.Hours, model.Minutes, 0), new Money(model.InitialAmount), user);
 
             var created = await _auctionRepository.CreateAsync(auction);
 
-            return CreatedAtAction(nameof(Create), created);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

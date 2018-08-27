@@ -24,11 +24,6 @@ namespace cqrs.Data.Sql.EF
             return await _dbContext.FindAsync<TEntity>(id);
         }
 
-        public async Task<TEntity> FindOneAsync(ISpecification<TEntity> specification)
-        {
-            return await _dbSet.AsQueryable().Where(specification.GetExpression()).SingleOrDefaultAsync();
-        }
-
         public async Task<IEnumerable<TEntity>> FindAllAsync()
         {
             return await _dbSet.AsQueryable().ToListAsync();

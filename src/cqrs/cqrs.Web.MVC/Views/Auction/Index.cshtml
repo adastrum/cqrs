@@ -24,7 +24,7 @@
                     <td>@auction.Seller.Name</td>
                     <td>@auction.Lot.Name</td>
                     <td>@auction.Closes.ToShortDateString()</td>
-                    <td>@auction.CurrentAmount.Amount @auction.CurrentAmount.CurrencyCode</td>
+                    <td>@auction.CurrentAmount?.Amount @auction.CurrentAmount?.CurrencyCode</td>
                     <td>@auction.Bids</td>
                 </tr>
             }

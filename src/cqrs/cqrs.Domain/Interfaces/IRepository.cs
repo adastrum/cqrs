@@ -8,7 +8,6 @@ namespace cqrs.Domain.Interfaces
         where TEntity : Entity, IAggreagateRoot
     {
         Task<TEntity> FindOneAsync(string id);
-        Task<TEntity> FindOneAsync(ISpecification<TEntity> specification);
         Task<IEnumerable<TEntity>> FindAllAsync();
         Task<IEnumerable<TEntity>> FindAllAsync(ISpecification<TEntity> specification);
         Task<TEntity> CreateAsync(TEntity entity);

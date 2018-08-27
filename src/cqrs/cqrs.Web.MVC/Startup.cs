@@ -40,6 +40,7 @@ namespace cqrs.Web.MVC
 
             services.AddScoped<IBus, InMemoryBus>();
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
 
             services.AddAutoMapper();
