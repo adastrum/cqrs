@@ -63,7 +63,7 @@ namespace cqrs.Web.MVC.Controllers
         public async Task<IActionResult> Create(CreateAuctionViewModel model)
         {
             //todo: validation
-            var currentUser = await GetCurrentUser();
+            var currentUser = await GetCurrentUserAsync();
 
             //todo: user not found
             var auction = new Auction(model.Name, model.Description, new TimeSpan(model.Days, model.Hours, model.Minutes, 0), new Money(model.InitialAmount), currentUser);
@@ -85,14 +85,14 @@ namespace cqrs.Web.MVC.Controllers
 
             var model = _mapper.Map<AuctionViewModel>(auction);
 
-            var currentUser = await GetCurrentUser();
+            var currentUser = await GetCurrentUserAsync();
 
             model.CanManage = currentUser.Id == model.Seller.Id;
 
             return View(model);
         }
 
-        [HttpPost("{id}")]
+        [HttpPost("{id}/cancel")]
         public async Task<IActionResult> Cancel(string id)
         {
             var commandResult = await _bus.SendCommandAsync(new CancelAuctionCommand(id));
@@ -102,7 +102,19 @@ namespace cqrs.Web.MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<User> GetCurrentUser()
+        [HttpPost("{id}/bid")]
+        public async Task<IActionResult> Bid(string id, decimal amount)
+        {
+            var currentUser = await GetCurrentUserAsync();
+
+            var commandResult = await _bus.SendCommandAsync(new BidCommand(id, amount, currentUser));
+
+            //todo: handle failures
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<User> GetCurrentUserAsync()
         {
             var identityUser = await _userManager.GetUserAsync(User);
 

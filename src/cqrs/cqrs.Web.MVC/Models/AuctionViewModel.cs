@@ -13,5 +13,6 @@ namespace cqrs.Web.MVC.Models
         public IEnumerable<BidViewModel> Bids { get; set; }
 
         public bool CanManage { get; set; }
+        public decimal Amount { get; set; }
     }
 }

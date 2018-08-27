@@ -7,12 +7,25 @@
 
 <div class="container">
     <h2>Auction Details</h2>
-    @if (Model.CanManage)
-    {
-        <form method="post" asp-controller="Auction" asp-action="Cancel">
-            <button type="submit" class="btn btn-danger" value="@Model.Id"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-        </form>
-    }
+    <ul class="nav nav-pills">
+        @if (Model.CanManage)
+        {
+            <li class="pull-right">
+                <form method="post" asp-controller="Auction" asp-action="Cancel" asp-route-id="@Model.Id">
+                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li class="pull-right">
+                <form class="form-inline" method="post" asp-controller="Auction" asp-action="Bid" asp-route-id="@Model.Id">
+                    <input class="form-control" type="search" asp-for="Amount" />
+                    <button type="submit" class="btn btn-primary">Bid</button>
+                </form>
+            </li>
+        }
+    </ul>
     <div class="form-group">
         <label asp-for="@Model.Seller.Name">Seller</label><br />
         <input class="form-control" asp-for="@Model.Seller.Name" readonly />

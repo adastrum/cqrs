@@ -44,6 +44,7 @@ namespace cqrs.Web.MVC
             services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
             services.AddScoped<ICommandHandler<CloseAuctionCommand>, CloseAuctionCommandHandler>();
             services.AddScoped<ICommandHandler<CancelAuctionCommand>, CancelAuctionCommandHandler>();
+            services.AddScoped<ICommandHandler<BidCommand>, BidCommandHandler>();
 
             services.AddAutoMapper();
         }

@@ -7,7 +7,11 @@
 
 <div class="container">
     <h2>Auctions</h2>
-    <a asp-area="" asp-controller="Auction" asp-action="Create" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Create</a>
+    <ul class="nav nav-pills">
+        <li class="pull-right">
+            <a asp-area="" asp-controller="Auction" asp-action="Create" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create</a>
+        </li>
+    </ul>
     <table class="table table-striped">
         <thead>
             <tr>

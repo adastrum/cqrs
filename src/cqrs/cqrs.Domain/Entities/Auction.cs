@@ -19,7 +19,7 @@ namespace cqrs.Domain.Entities
         public TimeSpan Duration { get; protected set; }
         public Money InitialAmount { get; protected set; }
         public User Seller { get; protected set; }
-        public IReadOnlyCollection<Bid> Bids => _bids.AsReadOnly();
+        public IList<Bid> Bids => _bids;
         public AuctionStatus Status { get; protected set; }
 
         protected Auction() { }
