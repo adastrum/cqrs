@@ -1,4 +1,5 @@
-﻿using cqrs.Domain.Entities;
+﻿using System;
+using cqrs.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace cqrs.Data.Sql.EF
@@ -51,7 +52,10 @@ namespace cqrs.Data.Sql.EF
                 auction.HasOne(x => x.Lot);
                 auction.Property(x => x.StartDate).IsRequired(false);
                 auction.Property(x => x.CloseDate).IsRequired(false);
-                auction.Property(x => x.Duration);
+                auction.Property(x => x.Duration)
+                    .HasConversion(
+                        x => x.Ticks,
+                        x => new TimeSpan(x));
                 auction.OwnsOne(x => x.InitialAmount, y =>
                 {
                     y.Property(z => z.Amount).IsRequired();
@@ -61,6 +65,11 @@ namespace cqrs.Data.Sql.EF
                 auction.HasMany(x => x.Bids).WithOne();
                 auction.Property(x => x.Status).IsRequired();
             });
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=cqrs;Trusted_Connection=True;");
         }
     }
 }
