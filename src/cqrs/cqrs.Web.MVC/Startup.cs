@@ -42,6 +42,8 @@ namespace cqrs.Web.MVC
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
+            services.AddScoped<ICommandHandler<CloseAuctionCommand>, CloseAuctionCommandHandler>();
+            services.AddScoped<ICommandHandler<CancelAuctionCommand>, CancelAuctionCommandHandler>();
 
             services.AddAutoMapper();
         }

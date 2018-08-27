@@ -11,5 +11,7 @@ namespace cqrs.Web.MVC.Models
         public DateTime? Closes { get; set; }
         public MoneyViewModel CurrentAmount { get; set; }
         public IEnumerable<BidViewModel> Bids { get; set; }
+
+        public bool CanManage { get; set; }
     }
 }
