@@ -25,7 +25,7 @@
                     <td>@auction.Seller.Name</td>
                     <td><a asp-controller="Auction" asp-action="Detail" asp-route-id="@auction.Id">@auction.Lot.Name</a></td>
                     <td>@auction.Closes?.ToShortDateString()</td>
-                    <td>@auction.CurrentAmount?.Amount @auction.CurrentAmount?.CurrencyCode</td>
+                    <td>@auction.CurrentAmount?.ToString()</td>
                     <td>@auction.Bids</td>
                 </tr>
             }

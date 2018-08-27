@@ -7,4 +7,52 @@
 
 <div class="container">
     <h2>Auction Details</h2>
+    <div class="form-group">
+        <label asp-for="@Model.Seller.Name">Seller</label><br />
+        <input class="form-control" asp-for="@Model.Seller.Name" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Lot.Name"></label><br />
+        <input class="form-control" asp-for="@Model.Lot.Name" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Lot.Description"></label><br />
+        <input class="form-control" asp-for="@Model.Lot.Description" readonly />
+    </div>
+    @if (Model.Closes.HasValue)
+    {
+        <div class="form-group">
+            <label asp-for="@Model.Closes"></label><br />
+            <input class="form-control" asp-for="@Model.Closes" readonly />
+        </div>
+    }
+    @if (Model.CurrentAmount != null)
+    {
+        <div class="form-group">
+            <label asp-for="@Model.CurrentAmount">Current amount</label><br />
+            <input class="form-control" asp-for="@Model.CurrentAmount" readonly />
+        </div>
+    }
+    @if (Model.Bids.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Bidder</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var bid in Model.Bids)
+            {
+                <tr>
+                    <td>@bid.Amount.ToString()</td>
+                    <td>@bid.Date</td>
+                    <td>@bid.Bidder.Name</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
 </div>
