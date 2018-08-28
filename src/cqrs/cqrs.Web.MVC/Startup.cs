@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using cqrs.Data.Sql.EF;
-using cqrs.Domain.Entities;
 using cqrs.Domain.Interfaces;
 using cqrs.Messaging.CommandHandlers;
 using cqrs.Messaging.Commands;
 using cqrs.Messaging.InMemory;
 using cqrs.Messaging.Interfaces;
+using cqrs.Web.MVC.Middleware;
 using cqrs.Web.MVC.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +42,7 @@ namespace cqrs.Web.MVC
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
+            services.AddScoped<ICommandHandler<CreateAuctionCommand>, CreateAuctionCommandHandler>();
             services.AddScoped<ICommandHandler<CloseAuctionCommand>, CloseAuctionCommandHandler>();
             services.AddScoped<ICommandHandler<CancelAuctionCommand>, CancelAuctionCommandHandler>();
             services.AddScoped<ICommandHandler<BidCommand>, BidCommandHandler>();
@@ -65,6 +66,8 @@ namespace cqrs.Web.MVC
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseMiddleware<AuthorizationMiddleware>();
 
             app.UseMvc(routes =>
             {

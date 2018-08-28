@@ -7,7 +7,7 @@
 
         public override string ToString()
         {
-            return $"{Amount:C} {CurrencyCode}";
+            return $"{Amount} {CurrencyCode}";
         }
     }
 }

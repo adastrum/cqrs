@@ -1,38 +1,32 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using cqrs.Application.Specifications;
 using cqrs.Domain.Entities;
 using cqrs.Domain.Enums;
 using cqrs.Domain.Interfaces;
-using cqrs.Domain.ValueObjects;
 using cqrs.Messaging.Commands;
+using cqrs.Messaging.Common;
 using cqrs.Messaging.Interfaces;
 using cqrs.Web.MVC.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cqrs.Web.MVC.Controllers
 {
     public class AuctionController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IRepository<User> _userRepository;
         private readonly IAuctionRepository _auctionRepository;
         private readonly IMapper _mapper;
         private readonly IBus _bus;
 
+        public User CurrentUser => (User)HttpContext.Items[nameof(CurrentUser)];
+
         public AuctionController(
-            UserManager<IdentityUser> userManager,
-            IRepository<User> userRepository,
             IAuctionRepository auctionRepository,
             IMapper mapper,
             IBus bus
         )
         {
-            _userManager = userManager;
-            _userRepository = userRepository;
             _auctionRepository = auctionRepository;
             _mapper = mapper;
             _bus = bus;
@@ -62,16 +56,11 @@ namespace cqrs.Web.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAuctionViewModel model)
         {
-            //todo: validation
-            var currentUser = await GetCurrentUserAsync();
+            var command = new CreateAuctionCommand(model.Name, model.Description, model.Days, model.Hours, model.Minutes, model.InitialAmount, CurrentUser);
 
-            //todo: user not found
-            var auction = new Auction(model.Name, model.Description, new TimeSpan(model.Days, model.Hours, model.Minutes, 0), new Money(model.InitialAmount), currentUser);
-            auction.Start();
+            var commandResult = await _bus.SendCommandAsync(command);
 
-            var created = await _auctionRepository.CreateAsync(auction);
-
-            return RedirectToAction(nameof(Index));
+            return HandleCommandResult(commandResult, nameof(Create), nameof(Index));
         }
 
         [HttpGet("{id}")]
@@ -85,9 +74,7 @@ namespace cqrs.Web.MVC.Controllers
 
             var model = _mapper.Map<AuctionViewModel>(auction);
 
-            var currentUser = await GetCurrentUserAsync();
-
-            model.CanManage = currentUser.Id == model.Seller.Id;
+            model.CanManage = CurrentUser.Id == model.Seller.Id;
 
             return View(model);
         }
@@ -95,32 +82,33 @@ namespace cqrs.Web.MVC.Controllers
         [HttpPost("{id}/cancel")]
         public async Task<IActionResult> Cancel(string id)
         {
-            var commandResult = await _bus.SendCommandAsync(new CancelAuctionCommand(id));
+            var command = new CancelAuctionCommand(id);
 
-            //todo: handle failures
+            var commandResult = await _bus.SendCommandAsync(command);
 
-            return RedirectToAction(nameof(Index));
+            return HandleCommandResult(commandResult, nameof(Detail), nameof(Index));
         }
 
         [HttpPost("{id}/bid")]
         public async Task<IActionResult> Bid(string id, decimal amount)
         {
-            var currentUser = await GetCurrentUserAsync();
+            var command = new BidCommand(id, amount, CurrentUser);
 
-            var commandResult = await _bus.SendCommandAsync(new BidCommand(id, amount, currentUser));
+            var commandResult = await _bus.SendCommandAsync(command);
 
-            //todo: handle failures
-
-            return RedirectToAction(nameof(Index));
+            return HandleCommandResult(commandResult, nameof(Detail), nameof(Index));
         }
 
-        private async Task<User> GetCurrentUserAsync()
+        private IActionResult HandleCommandResult(CommandResult commandResult, string errorViewName, string successActionName)
         {
-            var identityUser = await _userManager.GetUserAsync(User);
+            if (commandResult.Succeeded)
+            {
+                return RedirectToAction(successActionName);
+            }
 
-            var users = await _userRepository.FindAllAsync(new UserByName(identityUser.UserName));
+            ModelState.AddModelError(string.Empty, commandResult.Details);
 
-            return users.SingleOrDefault();
+            return View(errorViewName);
         }
     }
 }
