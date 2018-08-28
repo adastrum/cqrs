@@ -21,7 +21,7 @@ namespace cqrs.Web.MVC.Middleware
         {
             var identityUser = await userManager.GetUserAsync(context.User);
 
-            var users = await userRepository.FindAllAsync(new UserByName(identityUser.UserName));
+            var users = await userRepository.FindAllAsync(new UserByName(identityUser?.UserName));
 
             context.Items["CurrentUser"] = users.SingleOrDefault();
 

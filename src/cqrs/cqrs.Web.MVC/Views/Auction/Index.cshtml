@@ -8,9 +8,12 @@
 <div class="container">
     <h2>Auctions</h2>
     <ul class="nav nav-pills">
-        <li class="pull-right">
-            <a asp-area="" asp-controller="Auction" asp-action="Create" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create</a>
-        </li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="pull-right">
+                <a asp-area="" asp-controller="Auction" asp-action="Create" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create</a>
+            </li>
+        }
     </ul>
     <table class="table table-striped">
         <thead>

@@ -6,7 +6,6 @@ using cqrs.Domain.Entities;
 using cqrs.Domain.Enums;
 using cqrs.Domain.Interfaces;
 using cqrs.Messaging.Commands;
-using cqrs.Messaging.Common;
 using cqrs.Messaging.Interfaces;
 using cqrs.Web.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +59,7 @@ namespace cqrs.Web.MVC.Controllers
 
             var commandResult = await _bus.SendCommandAsync(command);
 
-            return HandleCommandResult(commandResult, nameof(Create), nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet("{id}")]
@@ -86,7 +85,7 @@ namespace cqrs.Web.MVC.Controllers
 
             var commandResult = await _bus.SendCommandAsync(command);
 
-            return HandleCommandResult(commandResult, nameof(Detail), nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost("{id}/bid")]
@@ -96,19 +95,7 @@ namespace cqrs.Web.MVC.Controllers
 
             var commandResult = await _bus.SendCommandAsync(command);
 
-            return HandleCommandResult(commandResult, nameof(Detail), nameof(Index));
-        }
-
-        private IActionResult HandleCommandResult(CommandResult commandResult, string errorViewName, string successActionName)
-        {
-            if (commandResult.Succeeded)
-            {
-                return RedirectToAction(successActionName);
-            }
-
-            ModelState.AddModelError(string.Empty, commandResult.Details);
-
-            return View(errorViewName);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
