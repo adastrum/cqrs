@@ -19,9 +19,54 @@ namespace cqrs.Data.Sql.EF
             _dbSet = _dbContext.Set<TEntity>();
         }
 
+        public TEntity FindOne(string id)
+        {
+            return _dbContext.Find<TEntity>(id);
+        }
+
+        public TEntity FindOne(ISpecification<TEntity> specification)
+        {
+            return _dbSet.AsQueryable().Where(specification.GetExpression()).SingleOrDefault();
+        }
+
+        public IEnumerable<TEntity> FindAll()
+        {
+            return _dbSet.AsQueryable().ToList();
+        }
+
+        public IEnumerable<TEntity> FindAll(ISpecification<TEntity> specification)
+        {
+            return _dbSet.AsQueryable().Where(specification.GetExpression()).ToList();
+        }
+
+        public TEntity Create(TEntity entity)
+        {
+            _dbSet.Add(entity);
+            _dbContext.SaveChanges();
+
+            return entity;
+        }
+
+        public void Update(TEntity entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+            _dbContext.SaveChanges();
+        }
+
         public async Task<TEntity> FindOneAsync(string id)
         {
             return await _dbContext.FindAsync<TEntity>(id);
+        }
+
+        public async Task<TEntity> FindOneAsync(ISpecification<TEntity> specification)
+        {
+            return await _dbSet.AsQueryable().Where(specification.GetExpression()).SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<TEntity>> FindAllAsync()
