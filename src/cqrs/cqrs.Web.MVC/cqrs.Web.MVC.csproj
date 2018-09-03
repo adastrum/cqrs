@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\cqrs.Application\cqrs.Application.csproj" />
+    <ProjectReference Include="..\cqrs.CommandStack\cqrs.CommandStack.csproj" />
     <ProjectReference Include="..\cqrs.Data.EF\cqrs.Data.Sql.EF.csproj" />
     <ProjectReference Include="..\cqrs.Messaging.InMemory\cqrs.Messaging.InMemory.csproj" />
     <ProjectReference Include="..\cqrs.Messaging\cqrs.Messaging.csproj" />

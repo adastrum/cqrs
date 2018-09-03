@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Threading.Tasks;
+using cqrs.CommandStack.Commands;
 using cqrs.Domain.Interfaces;
-using cqrs.Messaging.Commands;
 using cqrs.Messaging.Common;
 using cqrs.Messaging.Interfaces;
 
-namespace cqrs.Messaging.CommandHandlers
+namespace cqrs.CommandStack.CommandHandlers
 {
-    public class CloseAuctionCommandHandler : ICommandHandler<CloseAuctionCommand>
+    public class CancelAuctionCommandHandler : ICommandHandler<CancelAuctionCommand>
     {
         private readonly IAuctionRepository _auctionRepository;
 
-        public CloseAuctionCommandHandler(IAuctionRepository auctionRepository)
+        public CancelAuctionCommandHandler(IAuctionRepository auctionRepository)
         {
             _auctionRepository = auctionRepository;
         }
 
-        public async Task<CommandResult> HandleAsync(CloseAuctionCommand command)
+        public async Task<CommandResult> HandleAsync(CancelAuctionCommand command)
         {
             try
             {
                 var auction = await _auctionRepository.FindOneAsync(command.AuctionId);
 
-                auction.Close();
+                auction.Cancel();
 
                 await _auctionRepository.UpdateAsync(auction);
 

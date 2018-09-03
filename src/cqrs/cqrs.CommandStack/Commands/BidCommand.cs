@@ -1,7 +1,7 @@
 ﻿using cqrs.Domain.Entities;
 using cqrs.Messaging.Interfaces;
 
-namespace cqrs.Messaging.Commands
+namespace cqrs.CommandStack.Commands
 {
     public class BidCommand : ICommand
     {

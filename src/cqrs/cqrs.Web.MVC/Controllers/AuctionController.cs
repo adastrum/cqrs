@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using cqrs.Application.Specifications;
+using cqrs.CommandStack.Commands;
 using cqrs.Domain.Entities;
 using cqrs.Domain.Enums;
 using cqrs.Domain.Interfaces;
-using cqrs.Messaging.Commands;
 using cqrs.Messaging.Interfaces;
 using cqrs.Web.MVC.Models;
 using Microsoft.AspNetCore.Mvc;

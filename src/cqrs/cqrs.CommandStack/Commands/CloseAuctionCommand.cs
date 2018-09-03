@@ -1,10 +1,10 @@
 ﻿using cqrs.Messaging.Interfaces;
 
-namespace cqrs.Messaging.Commands
+namespace cqrs.CommandStack.Commands
 {
-    public class CancelAuctionCommand : ICommand
+    public class CloseAuctionCommand : ICommand
     {
-        public CancelAuctionCommand(string auctionId)
+        public CloseAuctionCommand(string auctionId)
         {
             AuctionId = auctionId;
         }

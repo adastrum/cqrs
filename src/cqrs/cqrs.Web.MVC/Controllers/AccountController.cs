@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using cqrs.Messaging.Commands;
+using cqrs.CommandStack.Commands;
 using cqrs.Messaging.Interfaces;
 using cqrs.Web.MVC.Models;
 using Microsoft.AspNetCore.Identity;

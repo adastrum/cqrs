@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using cqrs.CommandStack.CommandHandlers;
+using cqrs.CommandStack.Commands;
 using cqrs.Data.Sql.EF;
 using cqrs.Domain.Interfaces;
-using cqrs.Messaging.CommandHandlers;
-using cqrs.Messaging.Commands;
 using cqrs.Messaging.InMemory;
 using cqrs.Messaging.Interfaces;
 using cqrs.Web.MVC.Middleware;

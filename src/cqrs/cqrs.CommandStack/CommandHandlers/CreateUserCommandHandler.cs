@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using cqrs.CommandStack.Commands;
 using cqrs.Domain.Entities;
 using cqrs.Domain.Interfaces;
-using cqrs.Messaging.Commands;
 using cqrs.Messaging.Common;
 using cqrs.Messaging.Interfaces;
 
-namespace cqrs.Messaging.CommandHandlers
+namespace cqrs.CommandStack.CommandHandlers
 {
     public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
     {
