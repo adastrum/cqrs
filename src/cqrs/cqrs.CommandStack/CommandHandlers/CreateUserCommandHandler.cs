@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using cqrs.CommandStack.Commands;
 using cqrs.Domain.Entities;
 using cqrs.Domain.Interfaces;
-using cqrs.Messaging.Common;
 using cqrs.Messaging.Interfaces;
 
 namespace cqrs.CommandStack.CommandHandlers
@@ -17,20 +15,11 @@ namespace cqrs.CommandStack.CommandHandlers
             _userRepository = userRepository;
         }
 
-        public async Task<CommandResult> HandleAsync(CreateUserCommand command)
+        public async Task HandleAsync(CreateUserCommand command)
         {
-            try
-            {
-                var user = new User(command.Name);
+            var user = new User(command.Name);
 
-                await _userRepository.CreateAsync(user);
-
-                return CommandResult.Successfull();
-            }
-            catch (Exception exception)
-            {
-                return CommandResult.Failed(exception.Message);
-            }
+            await _userRepository.CreateAsync(user);
         }
     }
 }

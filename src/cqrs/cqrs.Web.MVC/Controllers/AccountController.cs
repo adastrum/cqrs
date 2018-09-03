@@ -11,17 +11,17 @@ namespace cqrs.Web.MVC.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IBus _bus;
+        private readonly ICommandDispatcher _commandDispatcher;
 
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IBus bus
+            ICommandDispatcher commandDispatcher
         )
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _bus = bus;
+            _commandDispatcher = commandDispatcher;
         }
 
         [HttpGet]
@@ -42,12 +42,7 @@ namespace cqrs.Web.MVC.Controllers
 
                 if (identityResult.Succeeded)
                 {
-                    var commandResult = await _bus.SendCommandAsync(new CreateUserCommand(model.Email));
-
-                    if (!commandResult.Succeeded)
-                    {
-                        ModelState.AddModelError(string.Empty, commandResult.Details);
-                    }
+                    await _commandDispatcher.PublishAsync(new CreateUserCommand(model.Email));
 
                     return RedirectToAction("Index", "Auction");
                 }

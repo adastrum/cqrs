@@ -38,7 +38,7 @@ namespace cqrs.Web.MVC
 
             services.AddMvc();
 
-            services.AddScoped<IBus, InMemoryBus>();
+            services.AddScoped<ICommandDispatcher, InMemoryCommandDispatcher>();
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IAuctionRepository, AuctionRepository>();
             services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();

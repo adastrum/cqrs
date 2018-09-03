@@ -5,19 +5,20 @@ using cqrs.Messaging.Interfaces;
 
 namespace cqrs.Messaging.InMemory
 {
-    public class InMemoryBus : IBus
+    public class InMemoryCommandDispatcher : ICommandDispatcher
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public InMemoryBus(IServiceProvider serviceProvider)
+        public InMemoryCommandDispatcher(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<CommandResult> SendCommandAsync<TCommand>(TCommand command) where TCommand : ICommand
+        public async Task PublishAsync<TCommand>(TCommand command)
+            where TCommand : class, ICommand
         {
             var handler = (ICommandHandler<TCommand>)_serviceProvider.GetService(typeof(ICommandHandler<TCommand>));
-            return await handler.HandleAsync(command);
+            await handler.HandleAsync(command);
         }
     }
 }

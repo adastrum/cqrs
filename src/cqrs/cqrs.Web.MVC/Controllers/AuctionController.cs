@@ -16,19 +16,19 @@ namespace cqrs.Web.MVC.Controllers
     {
         private readonly IAuctionRepository _auctionRepository;
         private readonly IMapper _mapper;
-        private readonly IBus _bus;
+        private readonly ICommandDispatcher _commandDispatcher;
 
         public User CurrentUser => (User)HttpContext.Items[nameof(CurrentUser)];
 
         public AuctionController(
             IAuctionRepository auctionRepository,
             IMapper mapper,
-            IBus bus
+            ICommandDispatcher commandDispatcher
         )
         {
             _auctionRepository = auctionRepository;
             _mapper = mapper;
-            _bus = bus;
+            _commandDispatcher = commandDispatcher;
         }
 
         public async Task<IActionResult> Index()
@@ -57,7 +57,7 @@ namespace cqrs.Web.MVC.Controllers
         {
             var command = new CreateAuctionCommand(model.Name, model.Description, model.Days, model.Hours, model.Minutes, model.InitialAmount, CurrentUser);
 
-            var commandResult = await _bus.SendCommandAsync(command);
+            await _commandDispatcher.PublishAsync(command);
 
             return RedirectToAction(nameof(Index));
         }
@@ -83,7 +83,7 @@ namespace cqrs.Web.MVC.Controllers
         {
             var command = new CancelAuctionCommand(id);
 
-            var commandResult = await _bus.SendCommandAsync(command);
+            await _commandDispatcher.PublishAsync(command);
 
             return RedirectToAction(nameof(Index));
         }
@@ -93,7 +93,7 @@ namespace cqrs.Web.MVC.Controllers
         {
             var command = new BidCommand(id, amount, CurrentUser);
 
-            var commandResult = await _bus.SendCommandAsync(command);
+            await _commandDispatcher.PublishAsync(command);
 
             return RedirectToAction(nameof(Index));
         }

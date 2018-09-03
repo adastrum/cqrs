@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
-using cqrs.Messaging.Common;
 
 namespace cqrs.Messaging.Interfaces
 {
     public interface ICommandHandler<in TCommand>
-        where TCommand : ICommand
+        where TCommand : class, ICommand
     {
-        Task<CommandResult> HandleAsync(TCommand command);
+        Task HandleAsync(TCommand command);
     }
 }
